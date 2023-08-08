@@ -18,7 +18,7 @@
         <div class="row align-items-center">
           <div class="col-md-6 justify-content-center">
             <h5 id="greeting"></h5>
-            <h2 id="message">You've been successfully absent today</h2>
+            <h2 id="message">You've been successfully Presence today</h2>
             <p>Thank you! Have a great day</p>
             <a
               id="content"
@@ -54,19 +54,19 @@
                         <a
                             href="history.html?name=${name}"
                             class="btn btn-outline-primary mt-3 rounded-3"
-                            >Check History Absent</a
+                            >Check History Presence</a
                         >
                         `
       );
     }
 
     if (already == 1) {
-      message.innerText = `You've been absent today`;
+      message.innerText = `You've been Presence today`;
     } else if (already == 0) {
       name = "Guest";
       message.innerText = `Your face is not registered, please contact the administrator`;
     } else {
-      message.innerText = `You've been successfully absent today, but you're late ${Math.abs(
+      message.innerText = `You've been successfully Presence today, but you're late ${Math.abs(
         late
       )} Hours`;
     }
