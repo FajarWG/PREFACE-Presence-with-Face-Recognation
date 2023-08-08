@@ -1,10 +1,6 @@
 const video = document.getElementById("video");
 
-Promise.all([
-  faceapi.nets.ssdMobilenetv1.loadFromUri("/models"),
-  faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
-  faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
-]).then(startWebcam);
+Promise.all([faceapi.nets.ssdMobilenetv1.loadFromUri("/models"), faceapi.nets.faceRecognitionNet.loadFromUri("/models"), faceapi.nets.faceLandmark68Net.loadFromUri("/models")]).then(startWebcam);
 
 function startWebcam() {
   navigator.mediaDevices
@@ -21,16 +17,13 @@ function startWebcam() {
 }
 
 function getLabeledFaceDescriptions() {
-  const labels = ["Fajar", "Dinar", "Aziz", "Nurul"];
+  const labels = ["Fajar", "Dinar", "Aziz", "Nurul", "Reyhan"];
   return Promise.all(
     labels.map(async (label) => {
       const descriptions = [];
       for (let i = 1; i <= 2; i++) {
         const img = await faceapi.fetchImage(`./labels/${label}/${i}.png`);
-        const detections = await faceapi
-          .detectSingleFace(img)
-          .withFaceLandmarks()
-          .withFaceDescriptor()
+        const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor();
         descriptions.push(detections.descriptor);
       }
       return new faceapi.LabeledFaceDescriptors(label, descriptions);
@@ -45,10 +38,10 @@ function checkLabelChange(newLabel) {
   if (newLabel === previousLabel) {
     consecutiveMatches++;
     if (consecutiveMatches === 10) {
-      if(newLabel === "unknown") {
+      if (newLabel === "unknown") {
         window.location.href = `/success.html?already=0`;
-      }else{
-        addData({name: newLabel})
+      } else {
+        addData({ name: newLabel });
       }
     }
   } else {
@@ -56,7 +49,6 @@ function checkLabelChange(newLabel) {
     previousLabel = newLabel;
   }
 }
-
 
 video.addEventListener("play", async () => {
   const labeledFaceDescriptors = await getLabeledFaceDescriptions();
@@ -69,10 +61,7 @@ video.addEventListener("play", async () => {
   faceapi.matchDimensions(canvas, displaySize);
 
   setInterval(async () => {
-    const detections = await faceapi
-      .detectAllFaces(video)
-      .withFaceLandmarks()
-      .withFaceDescriptors()
+    const detections = await faceapi.detectAllFaces(video).withFaceLandmarks().withFaceDescriptors();
 
     const resizedDetections = faceapi.resizeResults(detections, displaySize);
 
@@ -95,6 +84,5 @@ video.addEventListener("play", async () => {
       });
       drawBox.draw(canvas);
     });
-
   }, 100);
 });
