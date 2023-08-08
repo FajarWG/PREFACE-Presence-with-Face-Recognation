@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>History attendance</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth-compat.js"></script>
+    <link rel="stylesheet" href="./css/riwayat.css" />
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+    </script>
+    <script defer src="./js/database.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <section class="customers" id="customers"></section>
+        <section class="tentang" id="tentang">
+          <div class="tentang-container">
+            <div class="box">
+              <i class="bx"></i>
+              <div class="stars"></div>
+              <div class="review-profile">
+                <h3>History Attendance</h3>
+              </div>
+            </div>
+          </div>
+        </section>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Name</th>
+              <th scope="col">Date</th>
+              <th scope="col">Hour</th>
+              <th scope="col">Desc</th>
+            </tr>
+          </thead>
+          <tbody id="table"></tbody>
+        </table>
+        <a href="/index.html" class="btn btn-outline-primary mt-3 rounded-3"
+          >Back to home</a
+        >
+      </div>
+    </div>
+  </body>
+
+  <script src="./js/history.js"></script>
+</html>

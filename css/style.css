@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+canvas {
+    position: absolute;
+}
+
+.grandientnurehan {
+    background: linear-gradient(white, white, white, #dfe7fe);
+}
+
+.butn {
+    background-color: #91b3fa;
+    color: #fff;
+    transition: all 0.7s;
+}
+.butn:hover {
+    color: teal;
+    background-color: #fff;
+    border-color: teal;
+}
+
+.pill-button {
+    padding: 8px 16px;
+    border-radius: 20px;
+    background-color: #91b3fa;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.pill-button:hover {
+    background-color: #0056b3;
+    color: #fff;
+}

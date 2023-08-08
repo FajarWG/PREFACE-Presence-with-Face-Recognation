@@ -4,8 +4,6 @@ Promise.all([
   faceapi.nets.ssdMobilenetv1.loadFromUri("/models"),
   faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
   faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
-  faceapi.nets.faceExpressionNet.loadFromUri("/models"),
-  faceapi.nets.ageGenderNet.loadFromUri("/models"),
 ]).then(startWebcam);
 
 function startWebcam() {
@@ -40,6 +38,26 @@ function getLabeledFaceDescriptions() {
   );
 }
 
+let previousLabel = null;
+let consecutiveMatches = 0;
+
+function checkLabelChange(newLabel) {
+  if (newLabel === previousLabel) {
+    consecutiveMatches++;
+    if (consecutiveMatches === 10) {
+      if(newLabel === "unknown") {
+        window.location.href = `/success.html?already=0`;
+      }else{
+        addData({name: newLabel})
+      }
+    }
+  } else {
+    consecutiveMatches = 0;
+    previousLabel = newLabel;
+  }
+}
+
+
 video.addEventListener("play", async () => {
   const labeledFaceDescriptors = await getLabeledFaceDescriptions();
   const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors);
@@ -55,7 +73,6 @@ video.addEventListener("play", async () => {
       .detectAllFaces(video)
       .withFaceLandmarks()
       .withFaceDescriptors()
-      .withFaceExpressions();
 
     const resizedDetections = faceapi.resizeResults(detections, displaySize);
 
@@ -64,6 +81,13 @@ video.addEventListener("play", async () => {
     const results = resizedDetections.map((d) => {
       return faceMatcher.findBestMatch(d.descriptor);
     });
+
+    setTimeout(() => {
+      const newLabel = results[0].label;
+
+      checkLabelChange(newLabel);
+    }, 1000);
+
     results.forEach((result, i) => {
       const box = resizedDetections[i].detection.box;
       const drawBox = new faceapi.draw.DrawBox(box, {
@@ -72,6 +96,5 @@ video.addEventListener("play", async () => {
       drawBox.draw(canvas);
     });
 
-    faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
   }, 100);
 });
