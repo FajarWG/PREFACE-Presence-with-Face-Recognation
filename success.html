@@ -14,7 +14,7 @@
     />
     <link rel="stylesheet" href="./css/selamat.css" />
   </head>
-  <body>
+  <body class="grandientnurehan">
     <section id="banner">
       <div class="container">
         <div class="row align-items-center">
@@ -67,7 +67,7 @@
     } else if (already == 0) {
       name = "Guest";
       message.innerText = `Your face is not registered, please contact the administrator`;
-    } else {
+    } else if (already == 2) {
       message.innerText = `You've been successfully Presence today, but you're late ${Math.abs(
         late
       )} Hours`;

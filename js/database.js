@@ -74,7 +74,8 @@ async function addData({name}) {
       })
       .then((docRef) => {
         console.log("Document written with ID: ", docRef.id);
-        window.location.href = `/success.html?name=${name}&already=2`;
+        if(description == "On Time") window.location.href = `/success.html?name=${name}&already=3`;
+        else window.location.href = `/success.html?name=${name}&already=0`;
       })
       .catch((error) => {
         console.error("Error adding document: ", error);
